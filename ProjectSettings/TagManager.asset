@@ -14,10 +14,10 @@ TagManager:
   - Floor
   - Ground
   - Bridge
-  - 
-  - 
-  - 
-  - 
+  - Plate
+  - Slide
+  - Stairs
+  - PlaceJump
   - 
   - 
   - 

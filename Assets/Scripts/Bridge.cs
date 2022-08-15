@@ -1,19 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Bridge : MonoBehaviour
 {
-    [SerializeField] MeshRenderer _renderer;
+    private Plate[] plates;
+    private int _maxPlates;
 
-    private bool _isBuilt;
-
-    public bool IsBuilt => _isBuilt;
-
-    public void Build()
+    private void Start()
     {
-        _isBuilt = true;
-        _renderer.enabled = true;
+        plates = this.GetComponentsInChildren<Plate>();
+        _maxPlates = plates.Length;
+    }
+
+    public bool CheckBuild()
+    {
+        if (plates != null)
+        {
+            int quantityPlates = 0;
+
+            foreach (var plate in plates)
+            {
+                if (plate.IsBuilt)
+                    quantityPlates++;
+            }
+
+            if (quantityPlates == _maxPlates)
+                return true;
+
+            return false;
+        }
+
+        return true;
     }
 }

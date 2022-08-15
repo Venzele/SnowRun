@@ -1,60 +1,96 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class SetterTarget : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private SetterSizeSnowball _setterSizeSnowball;
+    [SerializeField] private Builder _builder;
     [SerializeField] private TrackingState _tracking;
     [SerializeField] private StopState _stop;
-    [SerializeField] private MovingForvardState _movingForvard;
-    [SerializeField] private SpawnerSnowball _spawnerSnowball;
-    [SerializeField] private LayerMask _bridge;
-    [SerializeField] private LayerMask _ground;
+    [SerializeField] private WayBotState _wayBot;
+    [SerializeField] private MoveOnAxisZState _moveOnAxisZ;
+    [SerializeField] private MoveOnSlideState _moveOnSlide;
+    [SerializeField] private LayerMask _plate;
 
-    private Bridge _currentBridge;
+    private bool _isMoveOnGround = false;
+    private bool _isJump = false;
 
     public event UnityAction<Player> StartedRun;
     public event UnityAction Stoped;
-    public event UnityAction WentOnBridge;
-
-    public bool IsBridge => Physics.CheckSphere(_player.transform.position, 0.5f, _bridge);
-    public bool IsGround => Physics.CheckSphere(_player.transform.position, 0.5f, _ground);
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            StartedRun?.Invoke(_player);
-        }
-
-        if (Input.GetMouseButton(0) && IsGround)
-        {
-            _player.MoveTo(_tracking);
-        }
-
         if (Input.GetMouseButtonUp(0))
         {
             _player.MoveTo(_stop);
             Stoped?.Invoke();
+            _isMoveOnGround = false;
+        }
+        else if (_isJump)
+        {
+            if (_player.IsOnGround == false)
+            {
+                _moveOnAxisZ.GiveDirection(1);
+                _player.MoveTo(_moveOnAxisZ);
+            }
+            else if (_player.IsOnGround)
+            {
+                _isJump = false;
+            }
         }
 
-        if (IsBridge && _spawnerSnowball.IsSpawn)
+        if (_player.IsOnPlate)
         {
-            Collider[] Bridges = Physics.OverlapSphere(_player.transform.position, 0.5f, _bridge);
-            _player.MoveTo(_movingForvard);
+            Stoped?.Invoke();
 
-            if (Bridges.Length > 0)
+            if (_setterSizeSnowball.IsSnowball == false && _player.GoCurrentBridge().CheckBuild() == false)
             {
-                _currentBridge =  Bridges[0].GetComponent<Bridge>();
-
-                if (_currentBridge.IsBuilt == false)
-                {
-                    WentOnBridge?.Invoke();
-                    _currentBridge.Build();
-                }
+                _moveOnAxisZ.GiveDirection(-1);
             }
-        } 
+            else if (_setterSizeSnowball.IsSnowball || _player.GoCurrentBridge().CheckBuild())
+            {
+                _moveOnAxisZ.GiveDirection(1);
+                _builder.TryBuild(_player, _plate);
+            }
+
+            _player.MoveTo(_moveOnAxisZ);
+            _isMoveOnGround = false;
+        }
+        else if (_player.IsOnStairs)
+        {
+            _moveOnAxisZ.GiveDirection(1);
+            _player.MoveTo(_moveOnAxisZ);
+            _isMoveOnGround = false;
+        }
+        else if (_player.IsPlaceJump)
+        {
+            if (_isJump == false)
+            {
+                _player.Jump();
+                _isJump = true;
+            }
+        }
+        else if (_player.IsOnSlide)
+        {
+            _player.MoveTo(_moveOnSlide);
+            _isMoveOnGround = false;
+        }
+        else if (Input.GetMouseButton(0) && _player.IsOnGround && _player.IsBot == false)
+        {
+            if (_isMoveOnGround == false)
+                StartedRun?.Invoke(_player);
+
+            _player.MoveTo(_tracking);
+            _isMoveOnGround = true;
+        }
+        else if (_player.IsOnGround && _player.IsBot)
+        {
+            if (_isMoveOnGround == false)
+                StartedRun?.Invoke(_player);
+
+            _player.MoveTo(_wayBot);
+            _isMoveOnGround = true;
+        }
     }
 }
