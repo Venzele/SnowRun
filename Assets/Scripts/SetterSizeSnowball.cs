@@ -7,11 +7,10 @@ public class SetterSizeSnowball : MonoBehaviour
     [SerializeField] private SetterTarget _setterTarget;
     [SerializeField] private Builder _builder;
     [SerializeField] private Player _player;
-    [SerializeField] private float _timeCooldown;
     [SerializeField] private float _stepSize;
     
     private readonly float _maxLevelSnowball = 10;
-    private readonly float _cooldownGrowth = 1.5f;
+    private readonly float _cooldownGrowth = 0.9f;
     private readonly float _firstSpeedGrowht = 2;
     private readonly float _secondSpeedGrowth = 0.5f;
     private readonly float _firstSpeedDecrease = 50;

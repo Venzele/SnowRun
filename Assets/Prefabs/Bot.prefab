@@ -5140,6 +5140,36 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &1544065842856488299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4603647568624049651}
+  m_Layer: 0
+  m_Name: PointSpawnTrace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4603647568624049651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544065842856488299}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3757382142599124160}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3757382142599088258
 GameObject:
   m_ObjectHideFlags: 0
@@ -5349,6 +5379,7 @@ GameObject:
   - component: {fileID: 6588907616963028180}
   - component: {fileID: 6588907616963028184}
   - component: {fileID: 9049116016565954139}
+  - component: {fileID: 2100215503256280201}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -5371,6 +5402,8 @@ Transform:
   - {fileID: 3757382142599124182}
   - {fileID: 6724491212706939670}
   - {fileID: 16359818}
+  - {fileID: 4603647568624049651}
+  - {fileID: 7628101931427871815}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5643,10 +5676,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e1dae393fc83b4faa57ea9c85c7b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particle: {fileID: 7114451690444373161}
   _setterSizeSnowball: {fileID: 537000639465863179}
   _spawnerSnowball: {fileID: 6588907615603782708}
   _player: {fileID: 6588907616625657550}
+  _particle: {fileID: 7114451690444373161}
+--- !u!114 &2100215503256280201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757382142599088288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c908e6ae29a04438e696b4348df6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _setterSizeSnowball: {fileID: 537000639465863179}
+  _spawnerSnowball: {fileID: 6588907615603782708}
+  _player: {fileID: 6588907616625657550}
+  _spline: {fileID: 7069712262897590110, guid: 925ebdc7894b9c74a9ebde1c269b1074, type: 3}
+  _container: {fileID: 0}
+  _spawnPoint: {fileID: 4603647568624049651}
+  _directionPoint: {fileID: 7628101931427871815}
+  _wayTrace: {fileID: 8689192311491023413, guid: b810a9bd5be276744a16beb8bb1aa03b, type: 3}
+  _secondBetweenSpawn: 0.1
 --- !u!1 &3757382142599088294
 GameObject:
   m_ObjectHideFlags: 0
@@ -6503,4 +6557,34 @@ Transform:
   - {fileID: 3757382142599124140}
   m_Father: {fileID: 3757382142599124174}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8612258686549882123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7628101931427871815}
+  m_Layer: 0
+  m_Name: PointDirection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7628101931427871815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8612258686549882123}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3757382142599124160}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -43,7 +43,7 @@ public class TwisterSnowball : MonoBehaviour
     {
         _snowball = _spawnerSnowball.NewSnowball;
 
-        while (Input.GetMouseButton(0) || _player.IsOnPlate || _player.IsOnStairs || _player.IsBot)
+        while (Input.GetMouseButton(0) || _player.IsOnPlate || _player.IsOnStairs || ( _player.IsBot && _player.IsRun))
         {
             _snowball.transform.Rotate(Time.deltaTime * _speed, 0, 0);
             yield return null;

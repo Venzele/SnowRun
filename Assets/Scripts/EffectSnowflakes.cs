@@ -12,12 +12,17 @@ public class EffectSnowflakes : SetterEffects
         _particle.Stop();
     }
 
-    protected override bool PlayEffect(Player player)
+    protected override bool CanPlayer(Player player)
     {
-        return Input.GetMouseButton(0) || player.IsOnPlate || player.IsOnStairs;
+        if (player.IsBot == false)
+            return Input.GetMouseButton(0) || player.IsOnPlate || player.IsOnStairs;
+        if (player.IsBot)
+            return player.IsRun || player.IsOnPlate || player.IsOnStairs;
+
+        return false;
     }
 
-    protected override IEnumerator DropSnowflakes(SetterSizeSnowball setterSizeSnowball, Player player)
+    protected override IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player)
     {
         while (PlayEffect(player))
         {

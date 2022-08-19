@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WayTrace : MonoBehaviour
@@ -7,9 +5,12 @@ public class WayTrace : MonoBehaviour
     [SerializeField] private Transform _pointSpawn;
     [SerializeField] private Transform _pointDirection;
 
-    public void TakePoints(Player player)
+    public Transform PointSpawn => _pointSpawn;
+    public Transform PointDirection => _pointDirection;
+
+    public void TakePoints(EffectTrace effectTrace)
     {
-        _pointSpawn.position = player.transform.position;
-        _pointDirection.position = player.transform.position;
+        _pointSpawn.position = effectTrace.SpawnPoint.position;
+        _pointDirection.position = effectTrace.DirectionPoint.position;
     }
 }

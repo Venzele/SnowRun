@@ -36,11 +36,6 @@ namespace SplineMesh {
         [SerializeField]
         private bool isLoop;
 
-        //private Vector3 _firstNode;
-        //private Vector3 _secondNode;
-        //private Vector3 _firstDirection;
-        //private Vector3 _secondDirection;
-
         public bool IsLoop {
             get { return isLoop; }
             set {
@@ -67,9 +62,7 @@ namespace SplineMesh {
             nodes.Clear();
             curves.Clear();
             AddNode(new SplineNode(new Vector3(0, 0, 0), new Vector3(0, 0, 0.05f)));
-            AddNode(new SplineNode(new Vector3(0, 0, 0.5f), new Vector3(0, 0, 0.55f)));
-            //AddNode(new SplineNode(_firstNode, _firstDirection));
-            //AddNode(new SplineNode(_secondNode, _secondDirection));
+            AddNode(new SplineNode(new Vector3(0, 0, 0.1f), new Vector3(0, 0, 0.15f)));
             RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
                 type = ListChangeType.clear
             });
@@ -83,26 +76,6 @@ namespace SplineMesh {
         public ReadOnlyCollection<CubicBezierCurve> GetCurves() {
             return curves.AsReadOnly();
         }
-
-        //public Vector3 TakeFirstNode(Vector3 point)
-        //{
-        //    return _firstNode = point;
-        //}
-
-        //public Vector3 TakeSecondNode(Vector3 point)
-        //{
-        //    return _secondNode = point;
-        //}
-
-        //public Vector3 TakeFirstDirection(Vector3 direction)
-        //{
-        //    return _firstDirection = direction;
-        //}
-
-        //public Vector3 TakeSecondDirection(Vector3 direction)
-        //{
-        //    return _secondDirection = direction;
-        //}
 
         private void RaiseNodeListChanged(ListChangedEventArgs<SplineNode> args) {
             if (NodeListChanged != null)

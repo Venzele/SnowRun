@@ -11,36 +11,41 @@ public class SetterEffects : MonoBehaviour
 
     private void OnEnable()
     {
-        _spawnerSnowball.Spawned += OnStartSnowflakes;
+        _spawnerSnowball.Spawned += OnStartEffects;
     }
 
     private void OnDisable()
     {
-        _spawnerSnowball.Spawned -= OnStartSnowflakes;
+        _spawnerSnowball.Spawned -= OnStartEffects;
     }
 
-    protected virtual bool PlayEffect(Player player)
+    protected bool PlayEffect(Player player)
     {
-        return false;
+        return CanPlayer(player);
     }
 
-    protected virtual IEnumerator DropSnowflakes(SetterSizeSnowball setterSizeSnowball, Player player)
+    protected virtual IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player)
     {
         while (PlayEffect(_player))
             yield return null;
     }
 
-    private void OnStartSnowflakes()
+    protected virtual bool CanPlayer(Player player)
     {
-        StopSnowflakes();
+        return false;
+    }
+
+    private void OnStartEffects()
+    {
+        StopEffects();
 
         if (_effects == null)
         {
-            _effects = StartCoroutine(DropSnowflakes(_setterSizeSnowball, _player));
+            _effects = StartCoroutine(GoEffects(_setterSizeSnowball, _player));
         }
     }
 
-    private void StopSnowflakes()
+    private void StopEffects()
     {
         if (_effects != null)
         {

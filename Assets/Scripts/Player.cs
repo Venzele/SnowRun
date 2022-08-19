@@ -45,22 +45,22 @@ public class Player : MonoBehaviour
 
     public void Accelerate()
     {
-        _speed = 6;
+        _speed = 9;
     }
 
     public void AccelerateMore()
     {
-        _speed = 15;
+        _speed = 17;
     }
 
     public void AccelerateInJump()
     {
-        _speed = 20;
+        _speed = 52;
     }
 
     public void Slow()
     {
-        _speed = 4;
+        _speed = 7;
     }
 
     public void Jump()

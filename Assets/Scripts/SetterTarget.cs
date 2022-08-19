@@ -21,7 +21,7 @@ public class SetterTarget : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if ((Input.GetMouseButtonUp(0) && _player.IsBot == false) || (_player.IsRun == false && _player.IsBot))
         {
             _player.MoveTo(_stop);
             Stoped?.Invoke();
