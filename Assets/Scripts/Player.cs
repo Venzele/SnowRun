@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask _slide;
     [SerializeField] private LayerMask _plate;
     [SerializeField] private LayerMask _placeJump;
-    [SerializeField] private bool _isBot;
 
     private Vector3 _lastPosition;
     private Vector3 _currentPostion;
@@ -24,10 +23,11 @@ public class Player : MonoBehaviour
     public bool IsOnGround => Physics.CheckSphere(transform.position, 0.5f, _ground);
     public bool IsPlaceJump => Physics.CheckSphere(transform.position, 0.5f, _placeJump);
     public bool IsRun => _lastPosition != _currentPostion;
-    public bool IsBot => _isBot;
 
-    private void Start()
+    private void Awake()
     {
+        _lastPosition = _currentPostion;
+        _currentPostion = transform.position;
         LengthHands = transform.localScale.x / 3;
     }
 

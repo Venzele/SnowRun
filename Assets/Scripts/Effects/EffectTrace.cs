@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class EffectTrace : SetterEffects
 {
-    [SerializeField] private Spline _spline;
+    [SerializeField] private WayTrace _wayTrace;
     [SerializeField] private Transform _container;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Transform _directionPoint;
-    [SerializeField] private WayTrace _wayTrace;
     [SerializeField] private float _secondBetweenSpawn;
 
     private Spline _currentSpline;
@@ -20,17 +19,7 @@ public class EffectTrace : SetterEffects
     public Transform SpawnPoint => _spawnPoint;
     public Transform DirectionPoint => _directionPoint;
 
-    protected override bool CanPlayer(Player player)
-    {
-        if (player.IsBot == false)
-            return Input.GetMouseButton(0) && player.IsOnGround;
-        else if (player.IsBot)
-            return player.IsRun && player.IsOnGround;
-
-        return false;
-    }
-
-    protected override IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player)
+    protected override IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player, SpawnerSnowball spawnerSnowball)
     {
         while (PlayEffect(player))
         {
@@ -46,7 +35,7 @@ public class EffectTrace : SetterEffects
                 if (_isSpawned == false)
                 {
                     _currentWayTrace = Instantiate(_wayTrace, _spawnPoint.transform.position, _spawnPoint.transform.rotation, _container);
-                    _currentSpline = Instantiate(_spline, _spawnPoint.transform.position, _spawnPoint.transform.rotation, _container);
+                    _currentSpline = _currentWayTrace.GetComponentInChildren<Spline>();
                     _isSpawned = true;
                 }
                 else if (_isSpawned)

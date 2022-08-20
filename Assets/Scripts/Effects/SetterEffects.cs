@@ -19,20 +19,15 @@ public class SetterEffects : MonoBehaviour
         _spawnerSnowball.Spawned -= OnStartEffects;
     }
 
-    protected bool PlayEffect(Player player)
+    protected virtual bool PlayEffect(Player player)
     {
-        return CanPlayer(player);
+        return false;
     }
 
-    protected virtual IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player)
+    protected virtual IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player, SpawnerSnowball spawnerSnowball)
     {
         while (PlayEffect(_player))
             yield return null;
-    }
-
-    protected virtual bool CanPlayer(Player player)
-    {
-        return false;
     }
 
     private void OnStartEffects()
@@ -41,7 +36,7 @@ public class SetterEffects : MonoBehaviour
 
         if (_effects == null)
         {
-            _effects = StartCoroutine(GoEffects(_setterSizeSnowball, _player));
+            _effects = StartCoroutine(GoEffects(_setterSizeSnowball, _player, _spawnerSnowball));
         }
     }
 

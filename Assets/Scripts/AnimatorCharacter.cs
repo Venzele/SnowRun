@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AnimatorPlayer : MonoBehaviour
+public class AnimatorCharacter : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private SetterSizeSnowball _setterSizeSnowball;
@@ -21,28 +21,11 @@ public class AnimatorPlayer : MonoBehaviour
     {
         if (_player.IsOnGround)
         {
-            _player.Slow();
-
-            if (_player.IsRun == false)
-            {
-                _animator.Play(Idle);
-            }
-            else if (_player.IsBot || Input.GetMouseButton(0))
-            {
-                if (_setterSizeSnowball.IsSnowball == false)
-                    _animator.Play(Run);
-                else if (_setterSizeSnowball.IsSnowball == true)
-                    _animator.Play(Push);
-            }
+            PlayOnGround();
         }
         else if (_player.IsOnStairs)
         {
-            _player.Accelerate();
-
-            if (_setterSizeSnowball.IsSnowball == false)
-                _animator.Play(Run);
-            else
-                _animator.Play(Push);
+            PlayOnStairs();
         }
         else if (_player.IsOnBridge)
         {
@@ -55,14 +38,39 @@ public class AnimatorPlayer : MonoBehaviour
         }
         else if (_player.IsPlaceJump)
         {
-            _player.AccelerateInJump();
-            _animator.Play(Jump);
+            PlayJump();
         }
         else if (_player.IsOnSlide)
         {
-            _player.AccelerateMore();
-            _animator.Play(Sit);
+            PlayOnSlide();
         }
+    }
+
+    private void PlayOnGround()
+    {
+        _player.Slow();
+
+        if (_player.IsRun == false)
+        {
+            _animator.Play(Idle);
+        }
+        else if (_player.IsRun)
+        {
+            if (_setterSizeSnowball.IsSnowball == false)
+                _animator.Play(Run);
+            else if (_setterSizeSnowball.IsSnowball == true)
+                _animator.Play(Push);
+        }
+    }
+
+    private void PlayOnStairs()
+    {
+        _player.Accelerate();
+
+        if (_setterSizeSnowball.IsSnowball == false)
+            _animator.Play(Run);
+        else
+            _animator.Play(Push);
     }
 
     private void TurnOnPlayBack()
@@ -79,5 +87,17 @@ public class AnimatorPlayer : MonoBehaviour
             _animator.Play(Sit);
         else if (_currentColor.name == Purple)
             _animator.Play(Dance);
+    }
+
+    private void PlayJump()
+    {
+        _player.AccelerateInJump();
+        _animator.Play(Jump);
+    }
+
+    private void PlayOnSlide()
+    {
+        _player.AccelerateMore();
+        _animator.Play(Sit);
     }
 }
