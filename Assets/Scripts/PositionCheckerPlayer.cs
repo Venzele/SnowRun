@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PositionCheckerPlayer : MonoBehaviour
 {
@@ -12,13 +11,6 @@ public class PositionCheckerPlayer : MonoBehaviour
 
     private Vector3 _lastPosition;
     private Vector3 _currentPostion;
-
-    public event UnityAction ReachedGround;
-    public event UnityAction ReachedPlate;
-    public event UnityAction ReachedBridge;
-    public event UnityAction ReachedStairs;
-    public event UnityAction ReachedSlide;
-    public event UnityAction ReachedPlaceJump;
 
     public bool IsOnBridge => Physics.CheckSphere(transform.position, 0.5f, _bridge);
     public bool IsOnSlide => Physics.CheckSphere(transform.position, 0.5f, _slide);
@@ -54,28 +46,5 @@ public class PositionCheckerPlayer : MonoBehaviour
         }
 
         return null;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        var plate = collision.gameObject.GetComponent<Plate>();
-        var ground = collision.gameObject.GetComponent<Ground>();
-        var stairs = collision.gameObject.GetComponent<Stairs>();
-        var bridge = collision.gameObject.GetComponent<Bridge>();
-        var placeJump = collision.gameObject.GetComponent<PlaceJump>();
-        var slide = collision.gameObject.GetComponent<Slide>();
-
-        if (ground)
-            ReachedGround?.Invoke();
-        else if (plate)
-            ReachedPlate?.Invoke();
-        else if (stairs)
-            ReachedStairs?.Invoke();
-        else if (bridge)
-            ReachedBridge?.Invoke();
-        else if (placeJump)
-            ReachedPlaceJump?.Invoke();
-        else if (slide)
-            ReachedSlide?.Invoke();
     }
 }

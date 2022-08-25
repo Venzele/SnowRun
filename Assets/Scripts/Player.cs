@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PositionCheckerPlayer _positionCheckerPlayer;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private int _jumpForce;
 
@@ -13,22 +12,6 @@ public class Player : MonoBehaviour
     private int _speedInJump = 52;
 
     public float LengthHands { get; private set; }
-
-    private void OnEnable()
-    {
-        _positionCheckerPlayer.ReachedPlate += Accelerate;
-        _positionCheckerPlayer.ReachedGround += Slow;
-        _positionCheckerPlayer.ReachedPlaceJump += AccelerateInJump;
-        _positionCheckerPlayer.ReachedSlide += AccelerateMore;
-    }
-
-    private void OnDisable()
-    {
-        _positionCheckerPlayer.ReachedPlate -= Accelerate;
-        _positionCheckerPlayer.ReachedGround -= Slow;
-        _positionCheckerPlayer.ReachedPlaceJump -= AccelerateInJump;
-        _positionCheckerPlayer.ReachedSlide -= AccelerateMore;
-    }
 
     private void Start()
     {

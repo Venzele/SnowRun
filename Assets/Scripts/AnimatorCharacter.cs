@@ -5,7 +5,6 @@ public class AnimatorCharacter : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SetterSizeSnowball _setterSizeSnowball;
     [SerializeField] private Player _player;
-    [SerializeField] private SetterTarget _setterTarget;
     [SerializeField] private PositionCheckerPlayer _positionCheckerPlayer;
     [SerializeField] private Material _currentColor;
 
@@ -20,58 +19,23 @@ public class AnimatorCharacter : MonoBehaviour
     private const string Red = "Red";
     private const string Purple = "Purple";
 
-    private void OnEnable()
+    private void Update()
     {
-        _setterTarget.Stoped += PlayIdle;
-        _positionCheckerPlayer.ReachedGround += PlayOnGround;
-        _positionCheckerPlayer.ReachedStairs += PlayOnStairs;
-        _positionCheckerPlayer.ReachedBridge += PlayOnBridge;
-        _positionCheckerPlayer.ReachedPlaceJump += PlayJump;
-        _positionCheckerPlayer.ReachedSlide += PlayOnSlide;
-    }
-
-    private void OnDisable()
-    {
-        _setterTarget.Stoped -= PlayIdle;
-        _positionCheckerPlayer.ReachedGround -= PlayOnGround;
-        _positionCheckerPlayer.ReachedStairs -= PlayOnStairs;
-        _positionCheckerPlayer.ReachedBridge -= PlayOnBridge;
-        _positionCheckerPlayer.ReachedPlaceJump -= PlayJump;
-        _positionCheckerPlayer.ReachedSlide -= PlayOnSlide;
-    }
-
-    //private void Update()
-    //{
-    //    if (_positionCheckerPlayer.IsOnGround)
-    //    {
-    //        PlayOnGround();
-    //    }
-    //    else if (_positionCheckerPlayer.IsOnStairs)
-    //    {
-    //        PlayOnStairs();
-    //    }
-    //    else if (_positionCheckerPlayer.IsOnBridge)
-    //    {
-    //        PlayOnBridge();
-    //    }
-    //    else if (_positionCheckerPlayer.IsPlaceJump)
-    //    {
-    //        PlayJump();
-    //    }
-    //    else if (_positionCheckerPlayer.IsOnSlide)
-    //    {
-    //        PlayOnSlide();
-    //    }
-    //}
-
-    private void PlayIdle()
-    {
-        _animator.SetInteger(NumberAnimation, Idle);
+        if (_positionCheckerPlayer.IsOnGround)
+            PlayOnGround();
+        else if (_positionCheckerPlayer.IsOnStairs)
+            PlayOnStairs();
+        else if (_positionCheckerPlayer.IsOnBridge)
+            PlayOnBridge();
+        else if (_positionCheckerPlayer.IsPlaceJump)
+            PlayJump();
+        else if (_positionCheckerPlayer.IsOnSlide)
+            PlayOnSlide();
     }
 
     private void PlayOnGround()
     {
-        //_player.Slow();
+        _player.Slow();
 
         if (_positionCheckerPlayer.IsRun == false)
         {
@@ -88,7 +52,7 @@ public class AnimatorCharacter : MonoBehaviour
 
     private void PlayOnStairs()
     {
-        //_player.Accelerate();
+        _player.Accelerate();
 
         if (_setterSizeSnowball.IsSnowball == false)
             _animator.SetInteger(NumberAnimation, Run);
@@ -98,7 +62,7 @@ public class AnimatorCharacter : MonoBehaviour
 
     private void PlayOnBridge()
     {
-        //_player.Accelerate();
+        _player.Accelerate();
 
         if (_setterSizeSnowball.IsSnowball == false && _positionCheckerPlayer.GoCurrentBridge().CheckBuild() == false)
             TurnOnPlayBack();
@@ -124,13 +88,13 @@ public class AnimatorCharacter : MonoBehaviour
 
     private void PlayJump()
     {
-        //_player.AccelerateInJump();
+        _player.AccelerateInJump();
         _animator.SetInteger(NumberAnimation, Jump);
     }
 
     private void PlayOnSlide()
     {
-        //_player.AccelerateMore();
+        _player.AccelerateMore();
         _animator.SetInteger(NumberAnimation, Sit);
     }
 }
