@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 6151823618314931189}
   - component: {fileID: 8267304574425366335}
   - component: {fileID: 7618861063957274347}
+  - component: {fileID: 5394299632051054464}
   m_Layer: 7
   m_Name: Iceberg
   m_TagString: Untagged
@@ -432,3 +433,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7258550502454401009, guid: 9c8f7bd0bceabf644a83b45e4e8b26df, type: 3}
+--- !u!114 &5394299632051054464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7618861063957274346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc3b161de25ab342a937f8f92162394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

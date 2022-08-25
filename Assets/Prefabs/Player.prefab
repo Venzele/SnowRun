@@ -1135,6 +1135,7 @@ GameObject:
   - component: {fileID: 7673095531576749439}
   - component: {fileID: 7673095531576749438}
   - component: {fileID: 7673095531576749425}
+  - component: {fileID: 8601652171143229109}
   - component: {fileID: 6846747082953428543}
   - component: {fileID: 7673095531576749427}
   - component: {fileID: 7673095531576749428}
@@ -1214,9 +1215,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d9c0392aa8ca04da5956946b3322e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _positionCheckerPlayer: {fileID: 8601652171143229109}
   _rigidbody: {fileID: 7673095531576749439}
-  _speed: 7
   _jumpForce: 26
+--- !u!114 &8601652171143229109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673095531576749423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419e152f134922e48b5407c32c058b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _ground:
     serializedVersion: 2
     m_Bits: 128
@@ -1235,7 +1248,6 @@ MonoBehaviour:
   _placeJump:
     serializedVersion: 2
     m_Bits: 4096
-  _isBot: 0
 --- !u!114 &6846747082953428543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,7 +1260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3ca8c541c516b4b86695d0774b025a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 7673095531576749425}
   _setterSizeSnowball: {fileID: 7673095531576749417}
   _builder: {fileID: 7673095531576749418}
   _stop: {fileID: 7673095531576749427}
@@ -1257,6 +1268,8 @@ MonoBehaviour:
   _plate:
     serializedVersion: 2
     m_Bits: 512
+  _player: {fileID: 7673095531576749425}
+  _positionCheckerPlayer: {fileID: 8601652171143229109}
   _tracking: {fileID: 7673095531576749428}
 --- !u!114 &7673095531576749427
 MonoBehaviour:
@@ -1360,6 +1373,7 @@ MonoBehaviour:
   _setterTarget: {fileID: 6846747082953428543}
   _builder: {fileID: 7673095531576749418}
   _player: {fileID: 7673095531576749425}
+  _positionCheckerPlayer: {fileID: 8601652171143229109}
   _stepSize: 0.2
 --- !u!114 &7673095531576749418
 MonoBehaviour:
@@ -1389,6 +1403,8 @@ MonoBehaviour:
   _animator: {fileID: 371591003903026947}
   _setterSizeSnowball: {fileID: 7673095531576749417}
   _player: {fileID: 7673095531576749425}
+  _setterTarget: {fileID: 6846747082953428543}
+  _positionCheckerPlayer: {fileID: 8601652171143229109}
   _currentColor: {fileID: 2100000, guid: 0af954739f306cb4d9a2f1394b9a7483, type: 2}
 --- !u!114 &1152558655033681855
 MonoBehaviour:
@@ -1404,7 +1420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _setterSizeSnowball: {fileID: 7673095531576749417}
   _spawnerSnowball: {fileID: 7673095531576749416}
-  _player: {fileID: 7673095531576749425}
+  _positionCheckerPlayer: {fileID: 8601652171143229109}
   _speed: 300
 --- !u!114 &9115662488689361685
 MonoBehaviour:
@@ -1420,7 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _setterSizeSnowball: {fileID: 7673095531576749417}
   _spawnerSnowball: {fileID: 7673095531576749416}
-  _player: {fileID: 7673095531576749425}
+  _positionCheckerPlayer: {fileID: 8601652171143229109}
   _particle: {fileID: 6469741486243681067}
 --- !u!114 &-2793353543561500189
 MonoBehaviour:
@@ -1436,7 +1452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _setterSizeSnowball: {fileID: 7673095531576749417}
   _spawnerSnowball: {fileID: 7673095531576749416}
-  _player: {fileID: 7673095531576749425}
+  _positionCheckerPlayer: {fileID: 8601652171143229109}
   _wayTrace: {fileID: 1010425315449161447, guid: f2a5358accced464dbbdce19dc64f638, type: 3}
   _container: {fileID: 0}
   _spawnPoint: {fileID: 7673095530211635681}
@@ -1537,13 +1553,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c11131fdf2b68da48a7e95777324ed45, type: 3}
---- !u!198 &6469741486243681067 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3726003158608995188, guid: c11131fdf2b68da48a7e95777324ed45, type: 3}
-  m_PrefabInstance: {fileID: 7673095530397233247}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7359038633062870164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 890799163940297931, guid: c11131fdf2b68da48a7e95777324ed45, type: 3}
+  m_PrefabInstance: {fileID: 7673095530397233247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6469741486243681067 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3726003158608995188, guid: c11131fdf2b68da48a7e95777324ed45, type: 3}
   m_PrefabInstance: {fileID: 7673095530397233247}
   m_PrefabAsset: {fileID: 0}

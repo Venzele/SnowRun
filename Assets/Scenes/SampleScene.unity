@@ -1974,14 +1974,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1352132520}
     m_Modifications:
-    - target: {fileID: 4743674933387774924, guid: a7eb57522afab454593aee991dc19502, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b57a95cd48f4c174db42444692909d52, type: 2}
-    - target: {fileID: 6884161799309923577, guid: a7eb57522afab454593aee991dc19502, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b57a95cd48f4c174db42444692909d52, type: 2}
     - target: {fileID: 8209146725643213117, guid: a7eb57522afab454593aee991dc19502, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -2759,6 +2751,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 603482857, guid: e2c17308704ee68429bdf5bef31048d6, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1457502593}
     - target: {fileID: 4855641728333317469, guid: e2c17308704ee68429bdf5bef31048d6, type: 3}
       propertyPath: _container
       value: 
@@ -2785,7 +2781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7669497404237777684, guid: e2c17308704ee68429bdf5bef31048d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7669497404237777684, guid: e2c17308704ee68429bdf5bef31048d6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2942,6 +2938,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1352132520}
     m_Modifications:
+    - target: {fileID: 5196999794774126993, guid: c57515c52c971ad4a87293a93723a203, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5196999794788319292, guid: c57515c52c971ad4a87293a93723a203, type: 3}
       propertyPath: m_Name
       value: Bridge
@@ -3056,10 +3056,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1352132520}
     m_Modifications:
-    - target: {fileID: 7452996426829017213, guid: 24030aedec0d8ff4c88b6bdf78c6c456, type: 3}
-      propertyPath: m_Center.y
-      value: 0.12
-      objectReference: {fileID: 0}
     - target: {fileID: 7452996426829017214, guid: 24030aedec0d8ff4c88b6bdf78c6c456, type: 3}
       propertyPath: m_Name
       value: Stairs
