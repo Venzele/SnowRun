@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EffectSnowflakesBot : EffectSnowflakes
 {
-    protected override bool PlayEffect(Player player)
+    protected override bool TakeStatePlayer()
     {
-        return player.IsRun;
+        return _positionCheckerPlayer.IsRun;
     }
 }

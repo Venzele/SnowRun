@@ -7,14 +7,15 @@ public class SetterSizeSnowball : MonoBehaviour
     [SerializeField] private SetterTarget _setterTarget;
     [SerializeField] private Builder _builder;
     [SerializeField] private Player _player;
+    [SerializeField] private PositionCheckerPlayer _positionCheckerPlayer;
     [SerializeField] private float _stepSize;
     
-    private readonly float _maxLevelSnowball = 10;
-    private readonly float _cooldownGrowth = 0.9f;
-    private readonly float _firstSpeedGrowht = 2;
-    private readonly float _secondSpeedGrowth = 0.5f;
-    private readonly float _firstSpeedDecrease = 50;
-    private readonly float _secondSpeedDecrease = 4;
+    private float _maxLevelSnowball = 10;
+    private float _cooldownGrowth = 0.9f;
+    private float _firstSpeedGrowht = 2;
+    private float _secondSpeedGrowth = 0.5f;
+    private float _firstSpeedDecrease = 50;
+    private float _secondSpeedDecrease = 4;
     private float _levelSnowball, _speedGrowth, _nextSize;
     private Coroutine _giveSizeSnowball;
     private Snowball _snowball;
@@ -44,14 +45,14 @@ public class SetterSizeSnowball : MonoBehaviour
 
         if (_giveSizeSnowball == null)
         {
-            if (_player.IsOnPlate)
+            if (_positionCheckerPlayer.IsOnPlate)
             {
-                if (_player.IsOnStairs)
+                if (_positionCheckerPlayer.IsOnStairs)
                     _giveSizeSnowball = StartCoroutine(GiveSizeSnowball(-1, 0, _firstSpeedDecrease, _secondSpeedDecrease));
-                else if (_player.IsOnBridge)
+                else if (_positionCheckerPlayer.IsOnBridge)
                     _giveSizeSnowball = StartCoroutine(GiveSizeSnowball(-0.25f, 0, _firstSpeedDecrease, _secondSpeedDecrease));
             }
-            else if (_levelSnowball == Mathf.Clamp(_levelSnowball, 1, _maxLevelSnowball) && _player.IsOnGround)
+            else if (_levelSnowball == Mathf.Clamp(_levelSnowball, 1, _maxLevelSnowball) && _positionCheckerPlayer.IsOnGround)
             {
                 _giveSizeSnowball = StartCoroutine(GiveSizeSnowball(1, _cooldownGrowth, _firstSpeedGrowht, _secondSpeedGrowth));
             }
@@ -103,7 +104,7 @@ public class SetterSizeSnowball : MonoBehaviour
 
     private void SelectParamsSnowball(float direction, float firstSpeed, float secondSpeed)
     {
-        if ((_levelSnowball == 1 && _player.IsOnGround) || (_levelSnowball <= 2 && _player.IsOnPlate))
+        if ((_levelSnowball == 1 && _positionCheckerPlayer.IsOnGround) || (_levelSnowball <= 2 && _positionCheckerPlayer.IsOnPlate))
         {
             _nextSize += 1 * direction;
             _speedGrowth = firstSpeed;
@@ -117,7 +118,7 @@ public class SetterSizeSnowball : MonoBehaviour
 
     private void TryRepeatChangeSize(float direction, float timeCooldown, float firstSpeed, float secondSpeed)
     {
-        if (_player.IsOnPlate)
+        if (_positionCheckerPlayer.IsOnPlate)
         {
             if (_levelSnowball <= 1)
             {
@@ -129,7 +130,7 @@ public class SetterSizeSnowball : MonoBehaviour
 
             return;
         }
-        else if (_levelSnowball == Mathf.Clamp(_levelSnowball, 1, _maxLevelSnowball) && _player.IsOnGround)
+        else if (_levelSnowball == Mathf.Clamp(_levelSnowball, 1, _maxLevelSnowball) && _positionCheckerPlayer.IsOnGround)
         {
             _giveSizeSnowball = StartCoroutine(GiveSizeSnowball(direction, timeCooldown, firstSpeed, secondSpeed));
         }

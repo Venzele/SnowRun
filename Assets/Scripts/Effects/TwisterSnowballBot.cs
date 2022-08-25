@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TwisterSnowballBot : TwisterSnowball
 {
-    protected override bool PlayEffect(Player player)
+    protected override bool TakeStatePlayer()
     {
-        return player.IsRun;
+        return _positionCheckerPlayer.IsRun;
     }
 }

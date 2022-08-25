@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class EffectSnowflakes : SetterEffects
+public abstract class EffectSnowflakes : SetterEffects
 {
     [SerializeField] private ParticleSystem _particle;
 
@@ -12,18 +12,18 @@ public class EffectSnowflakes : SetterEffects
         _particle.Stop();
     }
 
-    protected override IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player, SpawnerSnowball spawnerSnowball)
+    protected override IEnumerator GoEffects()
     {
-        while (PlayEffect(player))
+        while (TakeStatePlayer())
         {
-            _particle.transform.localPosition = Vector3.forward * (setterSizeSnowball.NextSize / 2);
+            _particle.transform.localPosition = Vector3.forward * (_setterSizeSnowball.NextSize / 2);
 
-            if (setterSizeSnowball.IsSnowball && _isPlay == false)
+            if (_setterSizeSnowball.IsSnowball && _isPlay == false)
             {
                 _particle.Play();
                 _isPlay = true;
             }
-            else if (setterSizeSnowball.IsSnowball == false && _isPlay)
+            else if (_setterSizeSnowball.IsSnowball == false && _isPlay)
             {
                 _particle.Stop();
                 _isPlay = false;

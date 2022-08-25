@@ -1,20 +1,21 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SetterTarget : MonoBehaviour
+public abstract class SetterTarget : MonoBehaviour
 {
-    [SerializeField] private Player _player;
     [SerializeField] private SetterSizeSnowball _setterSizeSnowball;
     [SerializeField] private Builder _builder;
     [SerializeField] private StopState _stop;
     [SerializeField] private MoveOnAxisZState _moveOnAxisZ;
     [SerializeField] private MoveOnSlideState _moveOnSlide;
     [SerializeField] private LayerMask _plate;
+    [SerializeField] private Player _player;
+    [SerializeField] protected PositionCheckerPlayer _positionCheckerPlayer;
 
     private bool _isMoveOnGround = false;
     private bool _isJump = false;
 
-    public event UnityAction<Player> StartedRun;
+    public event UnityAction<PositionCheckerPlayer> StartedRun;
     public event UnityAction Stoped;
 
     private void Update()
@@ -22,36 +23,28 @@ public class SetterTarget : MonoBehaviour
         StopCharacter();
         TryJump();
 
-        if (_player.IsOnPlate)
+        if (_positionCheckerPlayer.IsOnPlate)
             MoveOnPlate();
-        else if (_player.IsOnStairs)
+        else if (_positionCheckerPlayer.IsOnStairs)
             MoveForward();
-        else if (_player.IsPlaceJump)
+        else if (_positionCheckerPlayer.IsPlaceJump)
             Jump();
-        else if (_player.IsOnSlide)
+        else if (_positionCheckerPlayer.IsOnSlide)
             GoDownWithSlide();
-        else if (CanGoOnGround(_player))
+        else if (CanGoOnGround())
             MoveOnGround();
     }
 
-    protected virtual bool CanStop(Player player)
-    {
-        return false;
-    }
+    protected abstract bool CanStop();
 
-    protected virtual bool CanGoOnGround(Player player)
-    {
-        return false;
-    }
+    protected abstract bool CanGoOnGround();
 
-    protected virtual ITargetable TakeState()
-    {
-        return null;
-    }
+    protected abstract ITargetable TakeState();
+
 
     private void StopCharacter()
     {
-        if (CanStop(_player))
+        if (CanStop())
         {
             _player.MoveTo(_stop);
             Stoped?.Invoke();
@@ -63,12 +56,12 @@ public class SetterTarget : MonoBehaviour
     {
         if (_isJump)
         {
-            if (_player.IsOnGround == false)
+            if (_positionCheckerPlayer.IsOnGround == false)
             {
                 _moveOnAxisZ.GiveDirection(1);
                 _player.MoveTo(_moveOnAxisZ);
             }
-            else if (_player.IsOnGround)
+            else if (_positionCheckerPlayer.IsOnGround)
             {
                 _isJump = false;
             }
@@ -79,11 +72,11 @@ public class SetterTarget : MonoBehaviour
     {
         Stoped?.Invoke();
 
-        if (_setterSizeSnowball.IsSnowball == false && _player.GoCurrentBridge().CheckBuild() == false)
+        if (_setterSizeSnowball.IsSnowball == false && _positionCheckerPlayer.GoCurrentBridge().CheckBuild() == false)
         {
             _moveOnAxisZ.GiveDirection(-1);
         }
-        else if (_setterSizeSnowball.IsSnowball || _player.GoCurrentBridge().CheckBuild())
+        else if (_setterSizeSnowball.IsSnowball || _positionCheckerPlayer.GoCurrentBridge().CheckBuild())
         {
             _moveOnAxisZ.GiveDirection(1);
             _builder.TryBuild(_player, _plate);
@@ -117,10 +110,12 @@ public class SetterTarget : MonoBehaviour
 
     private void MoveOnGround()
     {
-        if (CanGoOnGround(_player))
+        if (CanGoOnGround())
         {
             if (_isMoveOnGround == false)
-                StartedRun?.Invoke(_player);
+            {
+                StartedRun?.Invoke(_positionCheckerPlayer);
+            }
 
             _player.MoveTo(TakeState());
             _isMoveOnGround = true;

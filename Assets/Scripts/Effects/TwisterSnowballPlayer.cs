@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TwisterSnowballPlayer : TwisterSnowball
 {
-    protected override bool PlayEffect(Player player)
+    protected override bool TakeStatePlayer()
     {
-        return Input.GetMouseButton(0) || player.IsOnPlate || player.IsOnStairs;
+        return Input.GetMouseButton(0) || _positionCheckerPlayer.IsOnPlate || _positionCheckerPlayer.IsOnStairs;
     }
 }

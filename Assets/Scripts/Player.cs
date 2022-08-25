@@ -2,39 +2,38 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private PositionCheckerPlayer _positionCheckerPlayer;
     [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private float _speed;
     [SerializeField] private int _jumpForce;
-    [SerializeField] private LayerMask _ground;
-    [SerializeField] private LayerMask _bridge;
-    [SerializeField] private LayerMask _stairs;
-    [SerializeField] private LayerMask _slide;
-    [SerializeField] private LayerMask _plate;
-    [SerializeField] private LayerMask _placeJump;
 
-    private Vector3 _lastPosition;
-    private Vector3 _currentPostion;
+    private int _speed;
+    private int _speedOnGround = 7;
+    private int _speedOnPlate = 9;
+    private int _speedOnSlide = 17;
+    private int _speedInJump = 52;
 
     public float LengthHands { get; private set; }
-    public bool IsOnBridge => Physics.CheckSphere(transform.position, 0.5f, _bridge);
-    public bool IsOnSlide => Physics.CheckSphere(transform.position, 0.5f, _slide);
-    public bool IsOnStairs => Physics.CheckSphere(transform.position, 0.5f, _stairs);
-    public bool IsOnPlate => Physics.CheckSphere(transform.position, 0.5f, _plate);
-    public bool IsOnGround => Physics.CheckSphere(transform.position, 0.5f, _ground);
-    public bool IsPlaceJump => Physics.CheckSphere(transform.position, 0.5f, _placeJump);
-    public bool IsRun => _lastPosition != _currentPostion;
 
-    private void Awake()
+    private void OnEnable()
     {
-        _lastPosition = _currentPostion;
-        _currentPostion = transform.position;
-        LengthHands = transform.localScale.x / 3;
+        _positionCheckerPlayer.ReachedPlate += Accelerate;
+        _positionCheckerPlayer.ReachedGround += Slow;
+        _positionCheckerPlayer.ReachedPlaceJump += AccelerateInJump;
+        _positionCheckerPlayer.ReachedSlide += AccelerateMore;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        _lastPosition = _currentPostion;
-        _currentPostion = transform.position;
+        _positionCheckerPlayer.ReachedPlate -= Accelerate;
+        _positionCheckerPlayer.ReachedGround -= Slow;
+        _positionCheckerPlayer.ReachedPlaceJump -= AccelerateInJump;
+        _positionCheckerPlayer.ReachedSlide -= AccelerateMore;
+    }
+
+    private void Start()
+    {
+        LengthHands = transform.localScale.x / 3;
+        _speed = _speedOnGround;
     }
 
     public void MoveTo(ITargetable target)
@@ -45,42 +44,26 @@ public class Player : MonoBehaviour
 
     public void Accelerate()
     {
-        _speed = 9;
+        _speed = _speedOnPlate;
     }
 
     public void AccelerateMore()
     {
-        _speed = 17;
+        _speed = _speedOnSlide;
     }
 
     public void AccelerateInJump()
     {
-        _speed = 52;
+        _speed = _speedInJump;
     }
 
     public void Slow()
     {
-        _speed = 7;
+        _speed = _speedOnGround;
     }
 
     public void Jump()
     {
         _rigidbody.velocity = Vector3.up * _jumpForce;
-    }
-
-    public Bridge GoCurrentBridge()
-    {
-        if (IsOnPlate)
-        {
-            Collider[] plates = Physics.OverlapSphere(transform.position, 0.5f, _plate);
-            return plates[0].GetComponentInParent<Bridge>();
-        }
-        else if (IsOnBridge)
-        {
-            Collider[] bridge = Physics.OverlapSphere(transform.position, 0.5f, _bridge);
-            return bridge[0].GetComponent<Bridge>();
-        }
-
-        return null;
     }
 }

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EffectTracePlayer : EffectTrace
 {
-    protected override bool PlayEffect(Player player)
+    protected override bool TakeStatePlayer()
     {
-        return Input.GetMouseButton(0) && player.IsOnGround;
+        return Input.GetMouseButton(0) && _positionCheckerPlayer.IsOnGround;
     }
 }

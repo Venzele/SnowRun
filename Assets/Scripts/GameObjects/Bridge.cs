@@ -2,25 +2,27 @@ using UnityEngine;
 
 public class Bridge : MonoBehaviour
 {
-    private Plate[] plates;
+    private Plate[] _plates;
     private int _maxPlates;
 
     private void Start()
     {
-        plates = this.GetComponentsInChildren<Plate>();
-        _maxPlates = plates.Length;
+        _plates = this.GetComponentsInChildren<Plate>();
+        _maxPlates = _plates.Length;
     }
 
     public bool CheckBuild()
     {
-        if (plates != null)
+        if (_plates != null)
         {
             int quantityPlates = 0;
 
-            foreach (var plate in plates)
+            foreach (var plate in _plates)
             {
                 if (plate.IsBuilt)
+                {
                     quantityPlates++;
+                }
             }
 
             if (quantityPlates == _maxPlates)

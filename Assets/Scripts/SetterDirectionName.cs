@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LookingTarget : MonoBehaviour
+public class SetterDirectionName : MonoBehaviour
 {
     private void Update()
     {

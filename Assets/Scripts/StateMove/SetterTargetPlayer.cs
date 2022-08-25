@@ -4,14 +4,14 @@ public class SetterTargetPlayer : SetterTarget
 {
     [SerializeField] private TrackingState _tracking;
 
-    protected override bool CanStop(Player player)
+    protected override bool CanStop()
     {
         return Input.GetMouseButtonUp(0);
     }
 
-    protected override bool CanGoOnGround(Player player)
+    protected override bool CanGoOnGround()
     {
-        return Input.GetMouseButton(0) && player.IsOnGround;
+        return Input.GetMouseButton(0) && _positionCheckerPlayer.IsOnGround;
     }
 
     protected override ITargetable TakeState()

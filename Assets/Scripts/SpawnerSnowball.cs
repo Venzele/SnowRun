@@ -31,14 +31,14 @@ public class SpawnerSnowball : MonoBehaviour
         _isSpawn = false;
     }
 
-    private void OnSpawn(Player player)
+    private void OnSpawn(PositionCheckerPlayer positionCheckerPlayer)
     {
-        if (player.IsOnGround)
+        if (positionCheckerPlayer.IsOnGround)
         {
             if (_isSpawn == false)
             {
-                _newSnowball = Instantiate(_template, player.transform.position, player.transform.rotation, player.transform);
-                _newSnowball.transform.localPosition = new Vector3(0, _size / 2, _size / 2 + player.LengthHands);
+                _newSnowball = Instantiate(_template, positionCheckerPlayer.transform.position, positionCheckerPlayer.transform.rotation, positionCheckerPlayer.transform);
+                _newSnowball.transform.localPosition = new Vector3(0, _size / 2, _size / 2);
                 _newSnowball.TakeScale(_size);
                 _isSpawn = true;
                 Spawned?.Invoke();

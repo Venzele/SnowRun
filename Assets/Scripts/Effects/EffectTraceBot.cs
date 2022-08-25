@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EffectTraceBot : EffectTrace
 {
-    protected override bool PlayEffect(Player player)
+    protected override bool TakeStatePlayer()
     {
-        return player.IsRun && player.IsOnGround;
+        return _positionCheckerPlayer.IsRun && _positionCheckerPlayer.IsOnGround;
     }
 }

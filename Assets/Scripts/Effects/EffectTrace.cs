@@ -2,7 +2,7 @@ using SplineMesh;
 using System.Collections;
 using UnityEngine;
 
-public class EffectTrace : SetterEffects
+public abstract class EffectTrace : SetterEffects
 {
     [SerializeField] private WayTrace _wayTrace;
     [SerializeField] private Transform _container;
@@ -19,18 +19,18 @@ public class EffectTrace : SetterEffects
     public Transform SpawnPoint => _spawnPoint;
     public Transform DirectionPoint => _directionPoint;
 
-    protected override IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player, SpawnerSnowball spawnerSnowball)
+    protected override IEnumerator GoEffects()
     {
-        while (PlayEffect(player))
+        while (TakeStatePlayer())
         {
-            _spawnPoint.localPosition = Vector3.forward * (setterSizeSnowball.NextSize / 2) + _hieght;
-            _directionPoint.localPosition = Vector3.forward * (setterSizeSnowball.NextSize / 2) + Vector3.forward * 0.05f + _hieght;
+            _spawnPoint.localPosition = Vector3.forward * (_setterSizeSnowball.NextSize / 2) + _hieght;
+            _directionPoint.localPosition = Vector3.forward * (_setterSizeSnowball.NextSize / 2) + Vector3.forward * 0.05f + _hieght;
 
-            if (setterSizeSnowball.IsSnowball == false || player.IsOnPlate)
+            if (_setterSizeSnowball.IsSnowball == false || _positionCheckerPlayer.IsOnPlate)
             {
                 _isSpawned = false;
             }
-            else if (setterSizeSnowball.IsSnowball && player.IsOnGround)
+            else if (_setterSizeSnowball.IsSnowball && _positionCheckerPlayer.IsOnGround)
             {
                 if (_isSpawned == false)
                 {

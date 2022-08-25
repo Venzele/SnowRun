@@ -1,11 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class SetterEffects : MonoBehaviour
+public abstract class SetterEffects : MonoBehaviour
 {
-    [SerializeField] private SetterSizeSnowball _setterSizeSnowball;
-    [SerializeField] private SpawnerSnowball _spawnerSnowball;
-    [SerializeField] private Player _player;
+    [SerializeField] protected SetterSizeSnowball _setterSizeSnowball;
+    [SerializeField] protected SpawnerSnowball _spawnerSnowball;
+    [SerializeField] protected PositionCheckerPlayer _positionCheckerPlayer;
 
     private Coroutine _effects;
 
@@ -19,16 +19,9 @@ public class SetterEffects : MonoBehaviour
         _spawnerSnowball.Spawned -= OnStartEffects;
     }
 
-    protected virtual bool PlayEffect(Player player)
-    {
-        return false;
-    }
+    protected abstract bool TakeStatePlayer();
 
-    protected virtual IEnumerator GoEffects(SetterSizeSnowball setterSizeSnowball, Player player, SpawnerSnowball spawnerSnowball)
-    {
-        while (PlayEffect(_player))
-            yield return null;
-    }
+    protected abstract IEnumerator GoEffects();
 
     private void OnStartEffects()
     {
@@ -36,7 +29,7 @@ public class SetterEffects : MonoBehaviour
 
         if (_effects == null)
         {
-            _effects = StartCoroutine(GoEffects(_setterSizeSnowball, _player, _spawnerSnowball));
+            _effects = StartCoroutine(GoEffects());
         }
     }
 
